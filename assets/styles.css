@@ -494,3 +494,83 @@ section { padding: 2rem 0; }
 .footer-nav a { color: var(--muted); font-size: 0.85rem; }
 
 .hidden { display: none !important; }
+
+/* ——— Finder catalog UX ——— */
+.catalog-status {
+  margin: 0 0 1rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.catalog-status.is-error {
+  border-color: #b45353;
+  color: #f0a8a8;
+}
+
+.catalog-status[hidden] {
+  display: none;
+}
+
+.catalog-source-note {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.label-hint {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.form-row select.model-select {
+  height: auto;
+  min-height: 10rem;
+  padding: 0.35rem;
+}
+
+.form-row select.model-select option {
+  padding: 0.35rem 0.5rem;
+}
+
+.results-vehicle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-row input[type="search"] {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-row input[type="search"]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.form-row select:disabled,
+.form-row input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

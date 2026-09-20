@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oil &amp; Fluid Finder | Blayne Larocca — Independent AMSOIL Dealer · Tampa, FL</title>
-  <meta name="description" content="Year/make/model or equipment-type fluid category finder. Independent AMSOIL Dealer Blayne Larocca (ZO 6347430) in Tampa, FL. Categories only — verify exact products on AMSOIL.com. No prices on this site.">
+  <meta name="description" content="Year/make/model oil finder for US cars, trucks, and SUVs — then verify categories on AMSOIL.com. Independent AMSOIL Dealer Blayne Larocca (ZO 6347430) in Tampa, FL. No prices on this site.">
   <meta name="robots" content="index,follow">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
@@ -36,10 +36,11 @@
       <div class="wrap">
         <h1>Fluid category finder</h1>
         <p class="lede">
-          Choose vehicle year/make/model <em>or</em> equipment type. We’ll suggest
-          <strong>recommended product categories</strong> — not exact SKUs.
-          Always confirm the precise product, viscosity, and capacity with the official
-          <a href="https://www.amsoil.com/lookup/" rel="noopener" target="_blank">AMSOIL.com vehicle / equipment lookup</a>
+          Pick your vehicle <strong>Year → Make → Model</strong> from a full US light-duty catalog,
+          <em>or</em> choose an equipment type. We’ll suggest
+          <strong>recommended product categories</strong> — not exact SKUs, viscosities, or capacities.
+          Always confirm the precise product with the official
+          <a href="https://www.amsoil.com/lookup/?zo=6347430" rel="noopener" target="_blank">AMSOIL.com vehicle / equipment lookup</a>
           before you buy.
         </p>
         <p class="disclaimer">This tool does not display prices. Shop and checkout only on AMSOIL.com via our dealer link.</p>
@@ -63,34 +64,31 @@
             <button type="button" class="tab" id="tab-equipment" role="tab" aria-selected="false" aria-controls="panel-equipment">Equipment type</button>
           </div>
 
+          <p id="catalog-status" class="catalog-status" role="status" aria-live="polite"></p>
+
           <form id="finder-form" action="#" method="get" novalidate>
             <div id="panel-vehicle" role="tabpanel">
               <div class="form-row">
                 <label for="year">Year</label>
-                <select id="year" name="year">
+                <select id="year" name="year" required>
                   <option value="">Select year</option>
                 </select>
               </div>
               <div class="form-row">
                 <label for="make">Make</label>
-                <select id="make" name="make">
+                <select id="make" name="make" required disabled>
                   <option value="">Select make</option>
-                  <option>Chevrolet</option>
-                  <option>GMC</option>
-                  <option>Ford</option>
-                  <option>Ram</option>
-                  <option>Toyota</option>
-                  <option>Honda</option>
-                  <option>BMW</option>
-                  <option>Mercedes-Benz</option>
-                  <option>Volkswagen</option>
-                  <option>Jeep</option>
-                  <option>Other / see AMSOIL.com lookup</option>
                 </select>
               </div>
               <div class="form-row">
+                <label for="model-filter">Filter models <span class="label-hint">(optional)</span></label>
+                <input type="search" id="model-filter" name="model_filter" placeholder="Type to filter… e.g. F150, Camry, Grand Cherokee" autocomplete="off" disabled>
+              </div>
+              <div class="form-row">
                 <label for="model">Model</label>
-                <input type="text" id="model" name="model" placeholder="e.g. F-150, Silverado, Camry" autocomplete="off">
+                <select id="model" name="model" required disabled size="8" class="model-select">
+                  <option value="">Select model</option>
+                </select>
               </div>
             </div>
 
@@ -115,27 +113,30 @@
             <button type="submit" class="btn btn-primary btn-block">Show recommended categories</button>
           </form>
 
+          <p id="catalog-source-note" class="catalog-source-note">
+            Catalog sourced from US EPA Fuel Economy vehicle menus; not an AMSOIL product database.
+          </p>
+
           <div class="note-box" style="margin-top:1.25rem;">
             <strong style="color:var(--text);">Important:</strong>
             Results are generic category suggestions for orientation only.
-            They are <em>not</em> official AMSOIL application guarantees.
+            They are <em>not</em> official AMSOIL application guarantees and do not list SKUs, viscosities, capacities, or prices.
             Verify every recommendation on AMSOIL.com before purchasing.
           </div>
         </div>
 
         <div class="results" id="results" aria-live="polite">
           <h2 class="section-title">Recommended product categories</h2>
+          <p class="results-vehicle" id="results-vehicle"></p>
           <p id="results-intro" style="color:var(--muted); font-size:0.95rem;"></p>
           <ul class="category-list" id="category-list"></ul>
 
           <div class="shop-cta">
-            <p>Ready to buy? Complete your purchase on AMSOIL.com through our Independent Dealer link. <strong>No prices are shown on this site.</strong></p>
-            <a class="btn btn-primary btn-lg" href="https://www.amsoil.com/?zo=6347430" rel="noopener sponsored">Shop on AMSOIL.com</a>
-            <p style="margin:1rem 0 0; font-size:0.8rem;">
-              Also open the official
-              <a href="https://www.amsoil.com/lookup/" rel="noopener" target="_blank">vehicle / equipment lookup</a>
-              to confirm exact products.
-            </p>
+            <p>Confirm exact products on AMSOIL.com, then shop through our Independent Dealer link. <strong>No prices are shown on this site.</strong></p>
+            <div class="cta-row">
+              <a class="btn btn-primary btn-lg" id="cta-lookup" href="https://www.amsoil.com/lookup/?zo=6347430" rel="noopener" target="_blank">Verify on AMSOIL.com lookup</a>
+              <a class="btn btn-outline btn-lg" id="cta-shop" href="https://www.amsoil.com/?zo=6347430" rel="noopener sponsored">Shop AMSOIL.com</a>
+            </div>
           </div>
         </div>
       </div>
@@ -154,153 +155,12 @@
       </nav>
       <div class="legal">
         AMSOIL® is a registered trademark of AMSOIL INC. Categories shown here are educational only — verify on AMSOIL.com.
+        Vehicle year/make/model lists are from US EPA Fuel Economy public menus, not AMSOIL.
         This site never displays AMSOIL product prices. No Google Ads or non-AMSOIL ads.
       </div>
     </div>
   </footer>
 
-  <script>
-    (function () {
-      // Populate years (current year down to 1980) — placeholder UX only
-      var yearSel = document.getElementById('year');
-      var y = new Date().getFullYear() + 1;
-      for (var i = y; i >= 1980; i--) {
-        var opt = document.createElement('option');
-        opt.value = String(i);
-        opt.textContent = String(i);
-        yearSel.appendChild(opt);
-      }
-
-      var tabVehicle = document.getElementById('tab-vehicle');
-      var tabEquipment = document.getElementById('tab-equipment');
-      var panelVehicle = document.getElementById('panel-vehicle');
-      var panelEquipment = document.getElementById('panel-equipment');
-      var mode = 'vehicle';
-
-      function setMode(next) {
-        mode = next;
-        var isVehicle = next === 'vehicle';
-        tabVehicle.classList.toggle('active', isVehicle);
-        tabEquipment.classList.toggle('active', !isVehicle);
-        tabVehicle.setAttribute('aria-selected', isVehicle ? 'true' : 'false');
-        tabEquipment.setAttribute('aria-selected', isVehicle ? 'false' : 'true');
-        panelVehicle.classList.toggle('hidden', !isVehicle);
-        panelEquipment.classList.toggle('hidden', isVehicle);
-      }
-
-      tabVehicle.addEventListener('click', function () { setMode('vehicle'); });
-      tabEquipment.addEventListener('click', function () { setMode('equipment'); });
-
-      // Category maps — CATEGORIES ONLY, no fake SKUs, no prices
-      var byEquipment = {
-        'diesel-pickup': [
-          { name: 'Heavy-duty / diesel engine oil', note: 'Match viscosity & API / OEM diesel specs on AMSOIL.com' },
-          { name: 'Automatic or manual transmission fluid', note: 'Confirm transmission type in official lookup' },
-          { name: 'Differential / gear lube', note: 'Front/rear as equipped; verify weight & limited-slip needs' },
-          { name: 'Oil filter & by-pass filtration (if applicable)', note: 'Fitment via AMSOIL.com lookup' },
-          { name: 'Coolant / antifreeze (as needed)', note: 'Follow OEM coolant chemistry requirements' }
-        ],
-        'gas-passenger': [
-          { name: 'Passenger-car synthetic motor oil', note: 'Verify viscosity & API/ILSAC specs' },
-          { name: 'Oil filter', note: 'Confirm fitment on AMSOIL.com' },
-          { name: 'Automatic transmission fluid (if automatic)', note: 'Match OEM ATF specification' },
-          { name: 'Differential / transfer case fluid (AWD/4WD)', note: 'As equipped — verify on lookup' }
-        ],
-        'european': [
-          { name: 'European-formula / ACEA-minded motor oil', note: 'Match ACEA class & OEM approvals on AMSOIL.com' },
-          { name: 'Oil filter', note: 'Confirm application' },
-          { name: 'OEM-spec automatic transmission fluid', note: 'Many European cars need specific ATF — verify' },
-          { name: 'Coolant meeting OEM chemistry', note: 'Do not mix incompatible coolants' }
-        ],
-        'motorcycle': [
-          { name: 'Motorcycle engine oil (shared-sump or separate)', note: 'Confirm wet-clutch / JASO needs on AMSOIL.com' },
-          { name: 'Fork oil / suspension fluid (as needed)', note: 'Match weight recommended by OEM' },
-          { name: 'Chain lube or primary/transmission (as equipped)', note: 'Depends on bike design — verify' },
-          { name: 'Oil filter', note: 'Confirm fitment' }
-        ],
-        'lawn': [
-          { name: 'Small-engine / 4-stroke motor oil', note: 'Match viscosity for air-cooled engines' },
-          { name: 'Grease for deck / linkages (as needed)', note: 'Optional maintenance category' },
-          { name: 'Fuel additive / stabilizer (seasonal)', note: 'Follow label; verify product on AMSOIL.com' }
-        ],
-        'classic': [
-          { name: 'Classic / high-zinc or appropriate motor oil', note: 'Flat-tappet & seal considerations — verify suitability' },
-          { name: 'Gear lube for differential / manual gearbox', note: 'Match weight & GL rating' },
-          { name: 'Grease', note: 'Chassis & bearings as applicable' },
-          { name: 'Transmission fluid (if automatic)', note: 'Older ATF specs — confirm on AMSOIL.com' }
-        ],
-        'atv-utv': [
-          { name: 'ATV/UTV engine oil', note: 'Confirm wet-clutch / OEM viscosity on AMSOIL.com' },
-          { name: 'Transmission / differential fluid', note: 'As equipped' },
-          { name: 'Grease', note: 'Suspension & driveline points' }
-        ],
-        'marine': [
-          { name: 'Marine engine oil / outboard oil category', note: '2-stroke vs 4-stroke critical — verify on AMSOIL.com' },
-          { name: 'Lower unit / gear lube (as equipped)', note: 'Confirm application' }
-        ],
-        'other': [
-          { name: 'Use official AMSOIL.com lookup', note: 'Enter exact equipment for authoritative recommendations' }
-        ]
-      };
-
-      var defaultVehicleCategories = [
-        { name: 'Synthetic motor oil', note: 'Confirm viscosity & specifications for your exact engine' },
-        { name: 'Oil filter', note: 'Fitment via AMSOIL.com vehicle lookup' },
-        { name: 'Transmission fluid', note: 'Automatic, DCT, CVT, or manual — match OEM spec' },
-        { name: 'Differential / transfer case fluid (if equipped)', note: 'Verify weights and limited-slip requirements' },
-        { name: 'Coolant / grease (as needed)', note: 'Follow OEM guidance; verify products on AMSOIL.com' }
-      ];
-
-      function inferEquipmentFromMake(make, model) {
-        var m = (make + ' ' + model).toLowerCase();
-        if (/bmw|mercedes|volkswagen|audi|volvo|porsche|mini/.test(m)) return 'european';
-        if (/silverado|sierra|f-?250|f-?350|ram 2500|ram 3500|powerstroke|duramax|cummins/.test(m)) return 'diesel-pickup';
-        return 'gas-passenger';
-      }
-
-      var form = document.getElementById('finder-form');
-      var results = document.getElementById('results');
-      var list = document.getElementById('category-list');
-      var intro = document.getElementById('results-intro');
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var cats;
-        var label;
-
-        if (mode === 'equipment') {
-          var eq = document.getElementById('equipment').value;
-          if (!eq) {
-            alert('Please select an equipment type.');
-            return;
-          }
-          cats = byEquipment[eq] || byEquipment.other;
-          label = document.getElementById('equipment').selectedOptions[0].textContent;
-        } else {
-          var year = document.getElementById('year').value;
-          var make = document.getElementById('make').value;
-          var model = document.getElementById('model').value.trim();
-          if (!year || !make) {
-            alert('Please select year and make (model optional).');
-            return;
-          }
-          var key = inferEquipmentFromMake(make, model);
-          cats = byEquipment[key] || defaultVehicleCategories;
-          label = year + ' ' + make + (model ? ' ' + model : '');
-        }
-
-        list.innerHTML = '';
-        cats.forEach(function (c) {
-          var li = document.createElement('li');
-          li.innerHTML = c.name + '<small>' + c.note + '</small>';
-          list.appendChild(li);
-        });
-
-        intro.textContent = 'Suggested categories for “' + label + '”. These are not exact SKUs and are not a substitute for the official AMSOIL.com lookup.';
-        results.classList.add('visible');
-        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    })();
-  </script>
+  <script src="assets/finder.js" defer></script>
 </body>
 </html>
